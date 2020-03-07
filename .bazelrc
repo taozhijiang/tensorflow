@@ -19,7 +19,8 @@ build:monolithic --define framework_shared_object=false
 # For projects which use TensorFlow as part of a Bazel build process, putting
 # nothing in a bazelrc will default to a monolithic build. The following line
 # opts in to modular op registration support by default.
-build --define framework_shared_object=true
+#== build --define framework_shared_object=true
+build --define framework_shared_object=false
 
 # Please note that MKL on MacOS or windows is still not supported.
 # If you would like to use a local MKL instead of downloading, please set the
@@ -74,6 +75,13 @@ build:nokafka --define=no_kafka_support=true
 build:noignite --define=no_ignite_support=true
 build:nonccl --define=no_nccl_support=true
 
+build --define no_aws_support=true
+build --define no_gcp_support=true
+build --define no_hdfs_support=true
+build --define no_kafka_support=true
+build --define no_ignite_support=true
+build --define no_nccl_support=true
+
 build --define=use_fast_cpp_protos=true
 build --define=allow_oversize_protos=true
 
@@ -92,6 +100,8 @@ build:dynamic_kernels --copt=-DAUTOLOAD_DYNAMIC_KERNELS
 build --define=PREFIX=/usr
 build --define=LIBDIR=$(PREFIX)/lib
 build --define=INCLUDEDIR=$(PREFIX)/include
+
+build --action_env TF_ENABLE_XLA="0"
 
 # Default options should come above this line
 
