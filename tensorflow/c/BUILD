@@ -84,9 +84,9 @@ tf_cuda_library(
         "//conditions:default": [
             ":c_api_internal",
             "//tensorflow/cc/saved_model:loader",
-            "//tensorflow/cc:gradients",
+#            "//tensorflow/cc:gradients",
             "//tensorflow/cc:ops",
-            "//tensorflow/cc:grad_ops",
+#            "//tensorflow/cc:grad_ops",
             "//tensorflow/cc:scope_internal",
             "//tensorflow/cc:while_loop",
             "//tensorflow/core:core_cpu",

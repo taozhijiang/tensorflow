@@ -515,7 +515,7 @@ tf_cc_shared_object(
         "//tensorflow/cc:cc_ops",
         "//tensorflow/cc:client_session",
         "//tensorflow/cc:scope",
-        "//tensorflow/cc/profiler",
+#        "//tensorflow/cc/profiler",
         "//tensorflow/core:tensorflow",
     ] + if_ngraph(["@ngraph_tf//:ngraph_tf"]),
 )
