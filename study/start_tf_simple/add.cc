@@ -1,28 +1,10 @@
-#include <iostream>
-#include <cassert>
+#include "tensor_util.hpp"
+#include "add.hpp"
 
 #include <tensorflow/core/platform/env.h>
 #include <tensorflow/core/public/version.h>
 #include <tensorflow/core/public/session.h>
 #include <tensorflow/core/framework/graph.pb.h>
-
-const std::string str_input1_ops = "x-input1:0";
-const std::string str_input2_ops = "x-input2:0";
-const std::string str_output_ops = "y-output:0";
-
-template <typename T>
-tensorflow::Tensor AsTensor(const std::vector<T>& vals) {
-    tensorflow::Tensor ret(tensorflow::DataTypeToEnum<T>::value, {static_cast<int>(vals.size())});
-    std::copy_n(vals.data(), vals.size(), ret.flat<T>().data());
-    return ret;
-}
-
-template <typename T>
-tensorflow::Tensor AsTensor(const std::vector<T>& vals, const tensorflow::TensorShape& shape) {
-    tensorflow::Tensor ret;
-    ret.CopyFrom(AsTensor(vals), shape);
-    return ret;
-}
 
 
 tensorflow::Session* PrepareSession(const std::string& model_file) {
@@ -136,43 +118,8 @@ bool RunInference(tensorflow::Session* session, const std::vector<int>& vec1, co
     return true;
 }
 
-static void usage() {
+void add_usage() {
     std::cout << "simple tensorflow exec demo:" << std::endl;
     std::cout << "bin/start_tf_add path/to/frozen-model.pb " << std::endl;
     std::cout << std::endl;
-}
-
-int main(int argc, char* argv[]) {
-
-    if(argc < 2) {
-        usage();
-        return EXIT_FAILURE;
-    }
-
-    const char* model_file = argv[1];
-    std::cout << "using model file: " << model_file << std::endl;
-
-    tensorflow::Session* session = PrepareSession(model_file);
-    if(!session) {
-        std::cout << "[ERROR] PrepareSession failed." << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    if(!WarmUpSession(session)) {
-        std::cout << "[ERROR] WarmupSession failed." << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    std::vector<int32_t> vec1{1, 3, 9};
-    std::vector<int32_t> vec2{3, 5, 7};
-
-    if(!RunInference(session, vec1, vec2)) {
-        std::cout << "[ERROR] RunInference failed." << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    CloseSession(session);
-
-    std::cout << "[INFO] Tensorflow Inference finished." << std::endl;
-    return EXIT_SUCCESS;
 }
