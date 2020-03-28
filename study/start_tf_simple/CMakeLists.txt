@@ -8,18 +8,18 @@ project(start_tf_simple)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
-set(DEPENDENCY_PREFIX "../../../../opensource/")
+set(macOS_PREFIX "/Volumes/CaseVolume/Repository/Dropbox/repos/macOS/")
+
 set(INCLUDE_DIRS
-    ${DEPENDENCY_PREFIX}/tensorflow_and_paddle/tensorflow_install_v1.13.1/include
-    ${DEPENDENCY_PREFIX}/tensorflow_and_paddle/tensorflow_install_v1.13.1/include/abseil-cpp
-    ${DEPENDENCY_PREFIX}/tensorflow_and_paddle/tensorflow_install_v1.13.1/include/eigen_archive
-    ${DEPENDENCY_PREFIX}/xtra_rhel7.x/google_prefix/include/
+    ${PROJECT_SOURCE_DIR}/../../
+    ${PROJECT_SOURCE_DIR}/../../bazel-genfiles/
+    ${macOS_PREFIX}/include
+    ${macOS_PREFIX}/include/eigen3/
 )
 include_directories( ${INCLUDE_DIRS} )
 
 link_directories(
-    ${DEPENDENCY_PREFIX}/tensorflow_and_paddle/tensorflow_install_v1.13.1/lib_monolithic/
-    /home/user/repos/machine_learning/tensorflow_v1.13.z/bazel-bin/tensorflow
+    ${PROJECT_SOURCE_DIR}/../../bazel-bin/tensorflow
 )
 
 set (EXTRA_LIBS ${EXTRA_LIBS} tensorflow_cc)

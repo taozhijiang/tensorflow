@@ -39,3 +39,7 @@ xcuserdata/**
 *.iml
 local.properties
 gradleBuild
+
+GPATH
+GRTAGS
+GTAGS
