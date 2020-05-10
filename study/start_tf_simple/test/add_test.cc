@@ -2,6 +2,4 @@
 
 #include "add.hpp"
 
-TEST(StartupTfSimpleAdd, TensorflowInferenceTest) {
-    ASSERT_EQ(1, 1);
-}
+TEST(StartupTfSimpleAdd, TensorflowInferenceTest) { ASSERT_EQ(1, 1); }

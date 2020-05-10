@@ -5,7 +5,8 @@ include("${PROJECT_SOURCE_DIR}/help.cmake")
 define_colors()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wno-shadow -Wno-sign-compare")
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+set(CMAKE_CXX_STANDARD 14)
 
 option(BUILD_DEBUG "build project for debug or development propurse..." ON)
 
@@ -15,14 +16,15 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
 set(macOS_PREFIX "/Volumes/CaseVolume/Repository/Dropbox/repos/macOS/")
 
-set(INCLUDE_DIRS
+set(INCLUDE_DIR
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/../../
     ${PROJECT_SOURCE_DIR}/../../bazel-genfiles/
+    /usr/local/include/eigen3/
     ${macOS_PREFIX}/include
     ${macOS_PREFIX}/include/eigen3/
 )
-include_directories( ${INCLUDE_DIRS} )
+include_directories( ${INCLUDE_DIR} )
 
 link_directories(
     ${PROJECT_SOURCE_DIR}/../../bazel-bin/tensorflow
@@ -30,6 +32,9 @@ link_directories(
 )
 
 set (EXTRA_LIBS ${EXTRA_LIBS} tensorflow_cc)
+set (EXTRA_LIBS ${EXTRA_LIBS} glog)
+set (EXTRA_LIBS ${EXTRA_LIBS} pthread)
+
 
 add_executable(start_tf_add main.cc add.cc)
 target_link_libraries(

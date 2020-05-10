@@ -7,5 +7,5 @@
 
 add_executable(add_test add_test.cc
                ../add.cc)
-target_link_libraries(add_test ${GOOGLE_TEST_LIBS} tensorflow_cc)
+target_link_libraries(add_test ${GOOGLE_TEST_LIBS} glog tensorflow_cc)
 add_test(NAME gtest_add_test COMMAND add_test)

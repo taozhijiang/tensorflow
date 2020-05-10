@@ -14,14 +14,16 @@ x1 = tf.placeholder(tf.int32, shape=[None, kInputNodeSize], name=kInputNodeName1
 x2 = tf.placeholder(tf.int32, shape=[None, kInputNodeSize], name=kInputNodeName2)
 
 kWeight = tf.Variable(tf.constant(10), name="weight-n")
-kBias   = tf.Variable(tf.constant(100), name="bias-n")
+with tf.colocate_with(kWeight):
+    kBias   = tf.Variable(tf.constant(100), name="bias-n")
 
 
 def run_demo(records1, records2):
 
     op_sum = tf.add(x1, x2)
     op_mul = tf.multiply(op_sum, kWeight)
-    y = tf.add(op_mul, kBias, name=kOutputNodeName)
+    with tf.device('/device:CPU:0'):
+        y = tf.add(op_mul, kBias, name=kOutputNodeName)
 
     with tf.Session() as session:
         tf.global_variables_initializer().run()
