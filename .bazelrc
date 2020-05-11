@@ -125,7 +125,9 @@ build:monolithic --define framework_shared_object=false
 # For projects which use TensorFlow as part of a Bazel build process, putting
 # nothing in a bazelrc will default to a monolithic build. The following line
 # opts in to modular op registration support by default.
-build --define framework_shared_object=true
+# build --define framework_shared_object=true
+# ztao optimize out
+build --define framework_shared_object=false
 
 # Flags for open source build, always set to be true.
 build --define open_source_build=true
@@ -192,6 +194,11 @@ build:noaws --define=no_aws_support=true
 build:nogcp --define=no_gcp_support=true
 build:nohdfs --define=no_hdfs_support=true
 build:nonccl --define=no_nccl_support=true
+# ztao optimize out
+build --define no_aws_support=true
+build --define no_gcp_support=true
+build --define no_hdfs_support=true
+build --define no_nccl_support=true
 
 build --define=use_fast_cpp_protos=true
 build --define=allow_oversize_protos=true
