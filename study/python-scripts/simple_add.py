@@ -3,11 +3,17 @@
 import model_util
 import tensorflow as tf
 
+# saved model
+import tensorflow.python.saved_model
+from tensorflow.python.saved_model import tag_constants
+from tensorflow.python.saved_model.signature_def_utils_impl import predict_signature_def
+
 kInputNodeSize = 1
 kInputNodeName1 = "x-input1"
 kInputNodeName2 = "x-input2"
 kOutputNodeSize = 1
 kOutputNodeName = "y-output"
+
 
 # 输入输出节点
 x1 = tf.placeholder(tf.int32, shape=[None, kInputNodeSize], name=kInputNodeName1)
@@ -32,7 +38,24 @@ def run_demo(records1, records2):
         print(result)
 
         frozen_model_file = "frozen_add_model.pb"
+        print("[INFO]frozen the model to ", frozen_model_file)
         model_util.freeze_graph(session, kOutputNodeName, frozen_model_file)
+
+        # SavedModel
+        export_path = "./saved_simple_add/00001"
+        builder = tf.saved_model.builder.SavedModelBuilder(export_path)
+        signature = predict_signature_def(
+                inputs = {
+                kInputNodeName1: x1,
+                kInputNodeName2: x2,
+                },
+                outputs = {kOutputNodeName: y})
+        builder.add_meta_graph_and_variables(sess=session,
+                                     tags=[tf.saved_model.tag_constants.SERVING],
+                                     signature_def_map={tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY: signature})
+
+        builder.save()
+        print("[INFO] savedmodel to ", export_path)
 
 def main(argv=None):
 

@@ -20,7 +20,6 @@ set(INCLUDE_DIR
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/../../
     ${PROJECT_SOURCE_DIR}/../../bazel-genfiles/
-    /usr/local/include/eigen3/
     ${macOS_PREFIX}/include
     ${macOS_PREFIX}/include/eigen3/
 )
@@ -42,6 +41,12 @@ target_link_libraries(
     ${EXTRA_LIBS}
 )
 
+# saved_model version of add
+add_executable(start_tf_saved_add saved_add.cc)
+target_link_libraries(
+    start_tf_saved_add
+    ${EXTRA_LIBS} protobuf
+)
 
 if(BUILD_DEBUG)
     

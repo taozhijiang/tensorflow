@@ -12,6 +12,9 @@
 // ? query tag
 //
 
+
+// bin/start_tf_add ../../python-scripts/frozen_add_model.pb
+
 int main(int argc, char *argv[]) {
   //
   // * Uncomment those if you want to use glog
