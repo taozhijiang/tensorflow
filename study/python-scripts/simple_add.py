@@ -7,6 +7,8 @@ import tensorflow as tf
 # weight = 10, bias = 100
 
 
+# saved_model_cli show --dir=./simple_add_v2/00001 --all
+
 kInputNodeName1 = "x-input1"
 kInputNodeName2 = "x-input2"
 kOutputNodeName = "y-output"
@@ -21,7 +23,8 @@ class SimpleAddModel(tf.Module):
   @tf.function(input_signature = [tf.TensorSpec(shape=None, dtype=tf.int32, name=kInputNodeName1),
                                   tf.TensorSpec(shape=None, dtype=tf.int32, name=kInputNodeName2)])
   def calc(self, x1, x2):
-    return (x1 + x2) * self.kWeight + self.kBias + tf.constant(1);
+    return {kOutputNodeName:
+            (x1 + x2) * self.kWeight + self.kBias + tf.constant(1)};
 
 
 
@@ -38,6 +41,7 @@ if __name__ == '__main__':
 
 
     loaded_model = tf.saved_model.load(export_dir)
+    print("[INFO] ", repr(loaded_model))
     print("[INFO] ", repr(loaded_model.calc([1, 2], [3, 4])))
     print("[INFO] DONE.")
 
