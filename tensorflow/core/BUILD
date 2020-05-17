@@ -2305,7 +2305,8 @@ tf_cuda_library(
         "//tensorflow/core/util:port",
         "//tensorflow/core/util:stats_calculator_portable",
         "//tensorflow/core/util:tensor_format",
-        "//tensorflow/compiler/jit:common",
+       # "//tensorflow/compiler/jit:common",
+        "//tensorflow/compiler/jit:dummy",
     ] + if_static(
         extra_deps = ["@com_google_protobuf//:protobuf"],
         otherwise = ["@com_google_protobuf//:protobuf_headers"],

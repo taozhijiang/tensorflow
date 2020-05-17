@@ -47,3 +47,7 @@ gradleBuild
 Podfile.lock
 Pods
 xcuserdata
+
+GPATH
+GRTAGS
+GTAGS

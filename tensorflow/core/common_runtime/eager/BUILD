@@ -316,7 +316,7 @@ tf_cuda_library(
         ],
         "//tensorflow:windows": KERNEL_AND_DEVICE_DEPS,
         "//conditions:default": KERNEL_AND_DEVICE_DEPS + [
-            "//tensorflow/compiler/jit:xla_kernel_creator_util",
+#            "//tensorflow/compiler/jit:xla_kernel_creator_util",
         ],
     }),
 )
@@ -377,7 +377,7 @@ cc_library(
         "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/memory",
         "//tensorflow/c:tf_tensor_internal",
-        "//tensorflow/compiler/jit:common",
+#        "//tensorflow/compiler/jit:common",
         "//tensorflow/core/profiler/lib:traceme",
     ] + select({
         "//tensorflow:android": [
@@ -494,7 +494,7 @@ cc_library(
         "@com_google_absl//absl/memory",
         "//tensorflow/c:c_api_internal",
         "//tensorflow/c:tf_tensor_internal",
-        "//tensorflow/compiler/jit:common",
+#        "//tensorflow/compiler/jit:common",
         "//tensorflow/core/profiler/lib:traceme",
     ] + select({
         "//tensorflow:android": [

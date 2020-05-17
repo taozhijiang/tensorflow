@@ -125,8 +125,8 @@ build:monolithic --define framework_shared_object=false
 # For projects which use TensorFlow as part of a Bazel build process, putting
 # nothing in a bazelrc will default to a monolithic build. The following line
 # opts in to modular op registration support by default.
-# build --define framework_shared_object=true
 # ztao optimize out
+# build --define framework_shared_object=true
 build --define framework_shared_object=false
 
 # Flags for open source build, always set to be true.
@@ -144,6 +144,9 @@ build:mkl --define=build_with_mkl=true --define=enable_mkl=true
 build:mkl --define=tensorflow_mkldnn_contraction_kernel=0
 build:mkl --define=build_with_mkl_dnn_v1_only=true
 build:mkl -c opt
+# ztao optimize out
+build --define=build_with_mkl=false --define=enable_mkl=false
+build --define tensorflow_mkldnn_contraction_kernel=0
 
 # This config refers to building with CUDA available. It does not necessarily
 # mean that we build CUDA op kernels.
@@ -308,6 +311,8 @@ build:avx2_linux --copt=-mavx2
 build:native_arch_linux --copt=-march=native
 build:avx_win --copt=/arch=AVX
 build:avx2_win --copt=/arch=AVX2
+# ztao macOS
+build --copt=-march=native
 
 # Options to build TensorFlow 1.x or 2.x.
 build:v1 --define=tf_api_version=1
@@ -318,8 +323,10 @@ build --config=v2
 test --config=v2
 
 # Enable XLA
-build:xla --action_env=TF_ENABLE_XLA=1
-build:xla --define=with_xla_support=true
+#build:xla --action_env=TF_ENABLE_XLA=1
+#build:xla --define=with_xla_support=true
+build --action_env=TF_ENABLE_XLA=0 --define=with_xla_support=false
+
 
 # BEGIN TF REMOTE BUILD EXECUTION OPTIONS
 # Options when using remote execution
